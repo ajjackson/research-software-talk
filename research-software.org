@@ -4,7 +4,7 @@
 #+OPTIONS: reveal_width:1200 reveal_height:800
 #+OPTIONS: reveal_title_slide:"<h2>%t</h2><h2>%a</h2><h3>%e</h3>"
 #+OPTIONS: toc:nil
-#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+# #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_MARGIN: 0.2
 #+REVEAL_MIN_SCALE: 0.5
 #+REVEAL_MAX_SCALE: 2.5
@@ -277,7 +277,21 @@
    - Advocacy/policy (Research Software Engineers)
    - Fellowship programme (this includes me!)
 
-** What makes research software (un)sustainable?
+** Reproducibility
+
+   We (scientists) need to talk about reproducibility
+
+   https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970
+
+
+** Some big ideas
+
+   People are working on ideas about relationship between code, data and science
+
+   http://sciencecodemanifesto.org/
+
+   https://codeisscience.github.io/manifesto/manifesto.html
+
 *** FAIR principles
     Developed for "scientific data management" 
     https://www.nature.com/articles/sdata201618
@@ -294,24 +308,10 @@
       - Usage license and detailed provenance   
 
 *** Software trouble
-    Software has some other concerns which are not directly addressed
-    by FAIR
+    Software has some concerns aside from FAIR
     - Installation can be complex
     - Hardware requirements/compatibility issues
-    - Managing versions
-    
-*** Application to software
-
-    People are working on ideas about relationship between code, data and science
-
-    http://sciencecodemanifesto.org/
-
-    https://codeisscience.github.io/manifesto/manifesto.html
-
-** Why bother?
-
-   - Reproducibility
-     https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970
+    - Managing versions    
 
 ** Key points
 *** Availability   
@@ -360,6 +360,9 @@
 *** Interoperability
    #+ATTR_HTML: :width 40%
    [[./images/protip-interoperable.png]]  
+   - Keep It Simple, Stupid (KISS)
+   - You don't have to invent a new Turing-complete format for
+     loosely-structured data. Use CSV,.ini,XML,JSON etc.
 
 *** Re-usability
 
@@ -384,10 +387,9 @@
      - Testing with sample data
 ** Library
      - e.g. [[https://github.com/wmd-group/smact][SMACT]]
-     - To be re-used and called from other programs via _API_
-     - Maintained and developed to support other projects
+     - To be called from other programs via _API_
      - Requires
-       - [[http://smact.readthedocs.io/en/latest/smact.lattice.html][API documentation]]. (In Python, use Sphinx and docstrings.)
+       - [[http://smact.readthedocs.io/en/latest/smact.lattice.html][API documentation]]
        - Installation notes
        - Test suite. Library gets called with different kinds
          of data and from different states; lots more scope for
@@ -403,8 +405,7 @@
      - Multi-functional package for some general problem type
          - Used primarily through a CLI or GUI
      - Not expected to be self-explanatory as a small program
-     - Contains many components which are re-used for different
-       problems
+     - Contains many components re-used for different problems
      - Requires
        - API for efficiently adding/extending features
        - Documentation for developers (API)
@@ -507,7 +508,7 @@
    - Point to other resources
 
 ** LICENSE
-#+ATTR_REVEAL: :frag appear
+   #+ATTR_REVEAL: :frag (appear)
    - Licensing is complicated
    - Don't make it more complicated by inventing your own
    - Use of standard licenses makes it quicker and easier for users
@@ -516,13 +517,13 @@
 ** CONTRIBUTING
    - Are external contributions welcome?
    - How should people interact with the project?
+   - Do you have style/format requirements?
 
 ** INSTALL
+   #+ATTR_REVEAL: :frag (appear)
    - Try to make installation easy...
-   #+ATTR_REVEAL: :frag t
    - ... but don't be /weird/ about it!
-   #+ATTR_REVEAL: :frag t
-   - Don't expect people to use =sudo= (they'll feel safer for it!)
+   - =sudo= makes me nervous
    - For Python projects, use setuptools
    - For compiled languages, use a simple makefile or autoconf
 
@@ -539,7 +540,7 @@
 ** tests
    - Don't re-invent the wheel, use an existing framework for
      non-trivial testing
-   - "Continuous Integration" e.g. Travis CI automatically runs
+   - "Continuous Integration" e.g. Travis CI automatically runs tests when changes are pushed to repository
    - Coverage testing is depressing but helpful
 
      #+ATTR_HTML: :width 60%
@@ -547,4 +548,53 @@
 
 * The actual coding bit
 
+** Some key skills
+   - Version control
+     - Learn how to use feature branches
+     - Write helpful commit messages
+
+   - Get good at editing
+     - Be lazy
+     - Use macros
+     - Use plugins
+
+** How to get better at programming
+   - A lot of this is just practice
+   - As with an instrument, practice only helps if it's /good/
+     practice
+   - Try different things:
+     - Test-driven development
+     - Use more objects
+     - Use less objects
+
+** How to get better at programming
+   - Programming is better with friends! It can be easier to spot an
+     elegant way of doing something in someone else's code
+   - Watch the issue tracker of a project you care about (e.g. ASE);
+     this is a great way to learn from other people and get your feet
+     wet with small contributions.
+
+** PROTIP: Write good code
+   - Always code with the expectation that someone else will see and
+     tinker with your code. This "someone else" is probably you in a
+     year's time.
+   - Use a style guide e.g. PEP8
+
+** PROTIP: Write good code
+   - Plan out your overall structure and think about data types
+   - Introduce tests as soon as a package becomes non-trivial
+   - Premature optimisation is evil
+   - Slow code is also evil
+
+** PROTIP: Write good code
+   - Don't let perfect get in the way of good
+
 * Summary
+
+** Summary
+   - Good science is open about its methods
+     - They probably involve software
+   - You're going to have to show people your software
+   - Good code doesn't make good software; good practice makes good software
+   - There is an overwhelming number of tools and options
+   - but also many good projects you can imitate
