@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Research software development</title>
+<meta name="author" content="(Adam J. Jackson)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/solarized.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2>Research software development</h2><h2>Adam J. Jackson</h2><h3><a href="mailto:adam.jackson@ucl.ac.uk">adam.jackson@ucl.ac.uk</a></h3>
+</section>
+
+<section>
+<section id="slide-orgc607403">
+<h2 id="orgc607403">Introduction</h2>
+<div class="outline-text-2" id="text-orgc607403">
+</div></section>
+<section id="slide-org0eb328f">
+<h3 id="org0eb328f">"PRO TIPS"</h3>
+
+<div class="figure">
+<p><img src="./images/cyberdemon.jpg" alt="cyberdemon.jpg" width="40%" />
+</p>
+</div>
+
+<ul>
+<li>Sometimes it's ok to state the obvious</li>
+<li>Sometimes "advanced" problems have simple solutions</li>
+
+</ul>
+
+</section>
+<section id="slide-org5721680">
+<h3 id="org5721680">About me</h3>
+<ul>
+<li>MEng chemical engineering at University of Bath (2006-2011)</li>
+<li>Joined the Sustainable Chemical Technologies DTC
+<ul>
+<li>Joined Walsh Materials Design group (MRes project, 2011)</li>
+<li>PhD in same group (2012-2016)
+<ul>
+<li>"Thermodynamics for practical kesterite photovoltaics"</li>
+
+</ul></li>
+
+</ul></li>
+<li>Post-doc in UCL Chemistry (Scanlon Materials Theory Group)
+<ul>
+<li>Working on novel transparent conductors</li>
+<li>(Defects, so much hybrid DFT 😰)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org0b4b963">
+<h3 id="org0b4b963">About my programming</h3>
+<ul>
+<li>Briefly exposed to BASIC at school</li>
+<li>Crash-course in Fortran in 2006</li>
+<li>Used some Matlab in undergrad</li>
+<li>Self-taught Python since around 2011</li>
+<li>Tinkered with some other stuff (C, Lisp, Julia, &#x2026;)</li>
+
+</ul>
+
+</section>
+<section >
+
+<ul>
+<li>Never had a structured course beyond language basics</li>
+<li>Never been mentored by an experienced programmer</li>
+
+</ul>
+
+</section>
+<section id="slide-orgcbb228a">
+<h3 id="orgcbb228a">Projects</h3>
+<ul>
+<li><a href="https://github.com/ajjackson">https://github.com/ajjackson</a></li>
+
+<li><a href="https://gitlab.com/ase/ase">https://gitlab.com/ase/ase</a></li>
+
+</ul>
+
+</section>
+<section >
+
+<p>
+It's an interesting time to be using Github
+</p>
+
+<blockquote  class="fragment">
+<p>
+<i>When it comes to our commitment to open source, judge us by the actions we have taken in the recent past, our actions today, and in the future.</i>
+</p>
+
+<p>
+<b><b>Microsoft CEO Satya Nadella</b></b>
+</p>
+</blockquote>
+
+<blockquote  class="fragment">
+<p>
+<i>Microsoft Corp. threatened to close its research facilities in Britain if the government went ahead with plans to promote open-source software, one of David Cameron’s former advisers said.</i>
+</p>
+
+<p>
+<b><b>Bloomberg, 2015</b></b>
+</p>
+</blockquote>
+
+</section>
+</section>
+<section>
+<section id="slide-orgead2883">
+<h2 id="orgead2883">Sustainable Research Software</h2>
+<div class="outline-text-2" id="text-orgead2883">
+</div></section>
+<section id="slide-org5e515a4">
+<h3 id="org5e515a4">Software sustainability</h3>
+<ul>
+<li>92% of academics use research software</li>
+<li>69% say that their research would not be practical without it</li>
+<li>56% develop their own software 
+<ul>
+<li>(worryingly, 21% of those have no training in software development)</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+(Simon Hettrick, Deputy Director of SSI)
+<a href="https://www.software.ac.uk/blog/2014-12-04-its-impossible-conduct-research-without-software-say-7-out-10-uk-researchers">https://www.software.ac.uk/blog/2014-12-04-its-impossible-conduct-research-without-software-say-7-out-10-uk-researchers</a>
+</p>
+
+</section>
+<section >
+
+<div class="figure">
+<p><img src="./images/ssi-logo.png" alt="ssi-logo.png" />
+</p>
+</div>
+
+<ul>
+<li>Supporting research software community in the UK</li>
+<li>"Better software, better research"</li>
+<li>Training (partnership with Software Carpentry)</li>
+<li>Advocacy/policy (Research Software Engineers)</li>
+<li>Fellowship programme (this includes me!)</li>
+
+</ul>
+
+</section>
+<section id="slide-orga2f7c62">
+<h3 id="orga2f7c62">Reproducibility</h3>
+<p>
+We (scientists) need to talk about reproducibility
+</p>
+
+<p>
+<a href="https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970">https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970</a>
+</p>
+
+
+</section>
+<section id="slide-orgcef4ed7">
+<h3 id="orgcef4ed7">Some big ideas</h3>
+<p>
+People are working on ideas about relationship between code, data and science
+</p>
+
+<p>
+<a href="http://sciencecodemanifesto.org/">http://sciencecodemanifesto.org/</a>
+</p>
+
+<p>
+<a href="https://codeisscience.github.io/manifesto/manifesto.html">https://codeisscience.github.io/manifesto/manifesto.html</a>
+</p>
+
+</section>
+<section id="slide-orga956794">
+<h4 id="orga956794">FAIR principles</h4>
+<p>
+Developed for "scientific data management" 
+<a href="https://www.nature.com/articles/sdata201618">https://www.nature.com/articles/sdata201618</a>
+</p>
+
+<ul>
+<li>Findable
+<ul>
+<li>Use persistent identifier</li>
+<li>Use metadata</li>
+
+</ul></li>
+<li>Available
+<ul>
+<li>Retrievable by an open standard protocal</li>
+
+</ul></li>
+<li>Interoperable
+<ul>
+<li>Format data in a formal, accessible way</li>
+
+</ul></li>
+<li>Reusable
+<ul>
+<li>"richly described" and using community standards</li>
+<li>Usage license and detailed provenance</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orga29fb59">
+<h4 id="orga29fb59">Software trouble</h4>
+<p>
+Software has some concerns aside from FAIR
+</p>
+<ul>
+<li>Installation can be complex</li>
+<li>Hardware requirements/compatibility issues</li>
+<li>Managing versions</li>
+
+</ul>
+
+</section>
+<section id="slide-orgb1e1b57">
+<h3 id="orgb1e1b57">Key points</h3>
+<div class="outline-text-3" id="text-orgb1e1b57">
+</div></section>
+<section id="slide-org8a5509f">
+<h4 id="org8a5509f">Availability</h4>
+<p>
+In a recent study researchers requested data and code from a
+random sample of 204 <i>Science</i> papers&#x2026;
+<a href="https://doi.org/10.1073/pnas.1708290115">https://doi.org/10.1073/pnas.1708290115</a>
+</p>
+
+<p>
+<i>Science</i> has a code availability policy.
+</p>
+
+<blockquote nil>
+<p>
+When you approach a PI for the source codes and raw data, you
+better explain who you are, whom you work for, why you need the
+data and what you are going to do with it.
+</p>
+</blockquote>
+<blockquote nil>
+<p>
+I have to say that this is a very unusual request without any
+explanation! Please ask your supervisor to send me an email with a
+detailed, and I mean detailed, explanation.
+</p>
+</blockquote>
+</section>
+<section >
+<blockquote nil>
+<p>
+Thank you for your interest in our paper. For the [redacted]
+calculations I used my own code, and there is no public version of
+this code, which could be downloaded. Since this code is not very
+user-friendly and is under constant development I prefer not to
+share this code.
+</p>
+</blockquote>
+<blockquote nil>
+<p>
+R is a free software package available at www.r-project.org/ I used
+R for the [redacted] models. As you probably know, [redacted] and
+[redacted] are quite complicated. But I don’t have to tell you that
+given that you are a statistics student! I used Matlab for the
+geometry.
+</p>
+</blockquote>
+
+</section>
+<section >
+
+
+<div class="figure">
+<p><img src="./images/protip-available.png" alt="protip-available.png" width="40%" />
+</p>
+</div>
+
+<ul>
+<li>Use a public source code repository following community
+standards
+<ul>
+<li>Also use a persistent archive such as Zenodo or institutional
+repository</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org792a6f6">
+<h4 id="org792a6f6">Interoperability</h4>
+
+<div class="figure">
+<p><img src="./images/protip-interoperable.png" alt="protip-interoperable.png" width="40%" />  
+</p>
+</div>
+<ul>
+<li>Keep It Simple, Stupid (KISS)</li>
+<li>You don't have to invent a new Turing-complete format for
+loosely-structured data. Use CSV,.ini,XML,JSON etc.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgfff5525">
+<h4 id="orgfff5525">Re-usability</h4>
+
+<div class="figure">
+<p><img src="./images/protip-reusable.png" alt="protip-reusable.png" width="40%" />
+</p>
+</div>
+
+<ul>
+<li>If your code has no license, I can't redistribute it</li>
+<li>If I make changes to it, nobody can redistribute it</li>
+<li>This isn't going to work for open science, is it?</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd5f3a08">
+<h2 id="orgd5f3a08">Software projects</h2>
+<p>
+Let's look at some different kinds of projects and consider their needs
+</p>
+
+</section>
+<section id="slide-org4f1c1c0">
+<h3 id="org4f1c1c0">Small program</h3>
+<ul>
+<li>e.g. <a href="https://github.com/ajjackson/mctools/blob/master/mctools/get_primitive.py">get-primitive</a></li>
+<li>Often called a "script" but doesn't have to be a scripting language</li>
+<li>Does one job well</li>
+<li>May even be a "single-shot" analysis with no options</li>
+<li>Requires
+<ul>
+<li>Comments to aid understanding and reproducibility</li>
+<li>Help command and/or README</li>
+
+</ul></li>
+<li>Nice-to-have
+<ul>
+<li>Installer</li>
+<li>Testing with sample data</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org65f02f8">
+<h3 id="org65f02f8">Library</h3>
+<ul>
+<li>e.g. <a href="https://github.com/wmd-group/smact">SMACT</a></li>
+<li>To be called from other programs via <span class="underline">API</span></li>
+<li>Requires
+<ul>
+<li><a href="http://smact.readthedocs.io/en/latest/smact.lattice.html">API documentation</a></li>
+<li>Installation notes</li>
+<li>Test suite. Library gets called with different kinds
+of data and from different states; lots more scope for
+"surprises".</li>
+
+</ul></li>
+<li>Nice-to-have
+<ul>
+<li>Usage guide; introduction to package and usage
+examples.</li>
+<li>Standardised coding style (good for contributions)</li>
+<li>Scripts act as an interface for non-developers and
+useful examples for API users.</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org487065c">
+<h3 id="org487065c">"Code" (large program)</h3>
+<ul>
+<li>e.g. <i>VASP</i></li>
+<li>Multi-functional package for some general problem type
+<ul>
+<li>Used primarily through a CLI or GUI</li>
+
+</ul></li>
+<li>Not expected to be self-explanatory as a small program</li>
+<li>Contains many components re-used for different problems</li>
+<li>Requires
+<ul>
+<li>API for efficiently adding/extending features</li>
+<li>Documentation for developers (API)</li>
+<li>User interface (CLI and/or GUI)</li>
+<li>Documentation for general users (CLI/GUI)</li>
+<li>Tests</li>
+
+</ul></li>
+<li>Nice-to-have
+<ul>
+<li>Sample data</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org9941042">
+<h3 id="org9941042">Workflow</h3>
+<p>
+In practice, my workflow is usually
+</p>
+
+<ol>
+<li>Script or notebook prototype</li>
+<li>Convert script to a library for easier re-use</li>
+<li>Add features and variations using the API to make new CL tools</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-orgce80fa6">
+<h2 id="orgce80fa6">Documentation</h2>
+<p>
+You should watch Daniele Procida's amazing talk about documentation
+</p>
+<ul>
+<li>Pycon video: <a href="https://www.youtube.com/watch?v=azf6yzuJt54">https://www.youtube.com/watch?v=azf6yzuJt54</a></li>
+<li>Blog version <a href="https://www.divio.com/en/blog/documentation/">https://www.divio.com/en/blog/documentation/</a></li>
+
+</ul>
+
+<p>
+The following ideas are directly taken from it
+</p>
+
+</section>
+<section id="slide-org1b7b329">
+<h3 id="org1b7b329">Four types of documentation</h3>
+<ul>
+<li>Tutorials</li>
+<li>How-to guides</li>
+<li>Explanation</li>
+<li>Reference</li>
+
+</ul>
+
+</section>
+<section id="slide-org0772043">
+<h3 id="org0772043">Four types of documentation</h3>
+<p>
+Daniele uses a wonderful cooking analogy for these:
+</p>
+<ul>
+<li><b>Tutorials</b> "Teaching a small child to cook"</li>
+<li><b>How-to guides</b> "A recipe in a book"</li>
+<li><b>Explanation</b> "An article on culinary social history"</li>
+<li><b>Reference</b> "A reference encyclopedia article"</li>
+
+</ul>
+
+</section>
+<section id="slide-org6761de3">
+<h3 id="org6761de3">Four types of documentation</h3>
+<ul>
+<li>These do not need to be located in four different places</li>
+<li>They should all <i>exist</i> and be findable at the right time</li>
+
+</ul>
+
+</section>
+<section id="slide-org5b651d4">
+<h3 id="org5b651d4">Four types of documentation</h3>
+<p>
+Applying them to scientific software:
+</p>
+</section>
+<section id="slide-org48907c1">
+<h4 id="org48907c1">Tutorials</h4>
+<ul>
+<li>Usually in a README on online manual.</li>
+<li>Lead a beginner, showing input steps and expected output.</li>
+
+</ul>
+
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./images/macrodensity-tutorial.png" alt="macrodensity-tutorial.png" width="60%" />
+</p>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="./images/galore-tut.png" alt="galore-tut.png" width="70%" />
+</p>
+</div>
+</div>
+
+
+<ul>
+<li>Producing the right plot is a big confidence booster!</li>
+
+</ul>
+</section>
+<section id="slide-orgfe84d8a">
+<h4 id="orgfe84d8a">How-to guides</h4>
+<ul>
+<li>A concise summary of how to do useful things.
+<ul>
+<li>Questaal docs show how this can be <a href="https://www.questaal.org/tutorial/lmf/bandplotting/">combined with a tutorial</a></li>
+<li>Visual galleries are nice: see <a href="http://sumo.readthedocs.io/en/latest/gallery.html">sumo</a> or matplotlib</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org42ef0c3">
+<h4 id="org42ef0c3">Explanation</h4>
+<ul>
+<li>Background theory, important assumptions.
+<ul>
+<li>Could be a chapter in manual</li>
+<li>Could be a "real" paper!</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/phonopy-paper.png" alt="phonopy-paper.png" width="60%" />
+</p>
+</div>
+
+</section>
+<section id="slide-org713114c">
+<h4 id="org713114c">Reference</h4>
+<ul>
+<li>API documentation</li>
+<li><p>
+Detailed command line reference
+</p>
+
+<div class="column" style="float:left; width: 50%">
+
+<div class="figure">
+<p><img src="./images/vasp-guide.png" alt="vasp-guide.png" width="60%" />
+</p>
+</div>
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="./images/man-page.png" alt="man-page.png" width="70%" />
+</p>
+</div>
+</div></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org7cbb393">
+<h2 id="org7cbb393">Packaging</h2>
+<div class="outline-text-2" id="text-org7cbb393">
+</div></section>
+<section id="slide-orgf580007">
+<h3 id="orgf580007">Stuff to include</h3>
+<ul>
+<li>README</li>
+<li>LICENSE</li>
+<li>CONTRIBUTING</li>
+<li>INSTALL</li>
+<li>CITATION</li>
+<li>tests</li>
+
+</ul>
+
+</section>
+<section id="slide-org0849c5a">
+<h3 id="org0849c5a">README</h3>
+<ul>
+<li>This document is usually your "homepage"</li>
+<li>Introduce the project</li>
+<li>Point to other resources</li>
+
+</ul>
+
+</section>
+<section id="slide-org2630623">
+<h3 id="org2630623">LICENSE</h3>
+<ul>
+<li class="fragment appear">Licensing is complicated</li>
+<li class="fragment appear">Don't make it more complicated by inventing your own</li>
+<li class="fragment appear">Use of standard licenses makes it quicker and easier for users</li>
+<li class="fragment appear"><a href="https://choosealicense.com/">https://choosealicense.com/</a></li>
+
+</ul>
+
+</section>
+<section id="slide-org0c9be05">
+<h3 id="org0c9be05">CONTRIBUTING</h3>
+<ul>
+<li>Are external contributions welcome?</li>
+<li>How should people interact with the project?</li>
+<li>Do you have style/format requirements?</li>
+
+</ul>
+
+</section>
+<section id="slide-orgc92322b">
+<h3 id="orgc92322b">INSTALL</h3>
+<ul>
+<li class="fragment appear">Try to make installation easy&#x2026;</li>
+<li class="fragment appear">&#x2026; but don't be <i>weird</i> about it!</li>
+<li class="fragment appear"><code>sudo</code> makes me nervous</li>
+<li class="fragment appear">For Python projects, use setuptools</li>
+<li class="fragment appear">For compiled languages, use a simple makefile or autoconf</li>
+
+</ul>
+
+</section>
+<section id="slide-orga30295e">
+<h3 id="orga30295e">CITATION</h3>
+<ul>
+<li>This is cutting edge!</li>
+<li>There still isn't really a standard way to cite code&#x2026;</li>
+
+</ul>
+<ul class="fragment">
+<li>&#x2026; but there should be!</li>
+<li><a href="https://citation-file-format.github.io/">Citation file format</a> has been proposed. 
+<ul>
+<li>Based on YAML: readability balanced for humans and machines</li>
+<li>Can include papers</li>
+
+</ul></li>
+<li><a href="https://software.ac.uk/index.php/which-journals-should-i-publish-my-software">New journals are emerging</a></li>
+
+</ul>
+
+</section>
+<section id="slide-org6f1468e">
+<h3 id="org6f1468e">tests</h3>
+<ul>
+<li>Don't re-invent the wheel, use an existing framework for
+non-trivial testing</li>
+<li>"Continuous Integration" e.g. Travis CI automatically runs tests when changes are pushed to repository</li>
+<li><p>
+Coverage testing is depressing but helpful
+</p>
+
+
+<div class="figure">
+<p><img src="./images/badges.png" alt="badges.png" width="60%" />
+</p>
+</div></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf45d4a2">
+<h2 id="orgf45d4a2">The actual coding bit</h2>
+<div class="outline-text-2" id="text-orgf45d4a2">
+</div></section>
+<section id="slide-org34eb362">
+<h3 id="org34eb362">Some key skills</h3>
+<ul>
+<li>Version control
+<ul>
+<li>Learn how to use feature branches</li>
+<li>Write helpful commit messages</li>
+
+</ul></li>
+
+<li>Get good at editing
+<ul>
+<li>Be lazy</li>
+<li>Use macros</li>
+<li>Use plugins</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org49e619d">
+<h3 id="org49e619d">How to get better at programming</h3>
+<ul>
+<li>A lot of this is just practice</li>
+<li>As with an instrument, practice only helps if it's <i>good</i>
+practice</li>
+<li>Try different things:
+<ul>
+<li>Test-driven development</li>
+<li>Use more objects</li>
+<li>Use less objects</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org8fd7099">
+<h3 id="org8fd7099">How to get better at programming</h3>
+<ul>
+<li>Programming is better with friends! It can be easier to spot an
+elegant way of doing something in someone else's code</li>
+<li>Watch the issue tracker of a project you care about (e.g. ASE);
+this is a great way to learn from other people and get your feet
+wet with small contributions.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgab175b5">
+<h3 id="orgab175b5">PROTIP: Write good code</h3>
+<ul>
+<li>Use a style guide e.g. PEP8 for Python
+<ul>
+<li><code>pip install pep8</code> for a nifty program that checks your style</li>
+
+</ul></li>
+<li>Assume that someone else will see and tinker with your code. This
+"someone else" is probably you in a year's time.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgf80a902">
+<h3 id="orgf80a902">PROTIP: Write good code</h3>
+<ul>
+<li>If developing a library or a code
+<ul>
+<li>Plan out your overall structure and think carefully about the
+flow of data</li>
+<li>Introduce tests as soon as a package becomes non-trivial</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org7323e2a">
+<h3 id="org7323e2a">PROTIP: Write good code</h3>
+<ul>
+<li class="fragment appear">Premature optimisation is evil
+<ul>
+<li>(Don't speed up things that are "fast enough")</li>
+
+</ul></li>
+<li class="fragment appear">Slow code is also evil
+<ul>
+<li>(Try to keep a short loop of changing and testing)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org3a3fd28">
+<h3 id="org3a3fd28">PROTIP: Write good code</h3>
+<ul>
+<li class="fragment appear">Don't let perfect get in the way of good</li>
+<li class="fragment appear">Someone else can help you get from good to perfect</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org065eb72">
+<h2 id="org065eb72">Summary</h2>
+<div class="outline-text-2" id="text-org065eb72">
+</div></section>
+<section id="slide-orgabff522">
+<h3 id="orgabff522">Summary</h3>
+<ul>
+<li>Good science is open about its methods
+<ul>
+<li>They probably involve software</li>
+
+</ul></li>
+<li>You're going to have to show people your software</li>
+<li>Good software is approachable and maintainable</li>
+<li>There is an overwhelming number of tools and options
+<ul>
+<li>but you can start by imitating projects you like</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+overview: true,
+width: 1200,
+height: 800,
+margin: 0.20,
+minScale: 0.50,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
