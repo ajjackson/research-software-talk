@@ -1,0 +1,273 @@
+#    -*- mode: org -*-
+#+OPTIONS: reveal_center:t reveal_progress:t reveal_history:t reveal_control:t
+#+OPTIONS: reveal_mathjax:t reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+OPTIONS: reveal_title_slide:"<h2>%t</h2><h2>%a</h2><h3>%e</h3>"
+#+OPTIONS: toc:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: none
+#+REVEAL_THEME: solarized
+#+REVEAL_HLEVEL: 1
+#+REVEAL_EXTRA_CSS: ./presentation.css
+#+BEAMER_FRAME_LEVEL: 2
+
+#+TITLE: Research software development
+#+AUTHOR: Adam J. Jackson
+#+EMAIL: adam.jackson@ucl.ac.uk
+
+
+* COMMENT Software protips
+  - Brainstorming for WMD group presentation
+
+  - Zen of Python has lots of good stuff in. Could use as a framing
+    device or as a closing summary.
+
+  - Classify types of research software that have different needs,
+    and may overlap.
+
+    - Small program
+      - e.g. /get-primitive/
+      - Often called a "script" but doesn't have to be a scripting language
+      - Does one job well
+      - May even be a "single-shot" analysis with no options       
+      - Requires
+        - Comments to aid understanding and reproducibility
+        - Help command and/or README
+      - Nice-to-have
+        - Testing with sample data
+    - Library
+      - e.g. /SMACT/
+      - To be re-used and called from other programs via _API_
+      - To be maintained and developed
+      - Requires
+        - API documentation. (In Python, use Sphinx and docstrings.)
+        - Installation notes
+        - Test suite. Libs functions get called with different kinds
+          of data and from different states; lots more scope for
+          breakage if these cases are not defined and tested.
+      - Nice-to-have
+        - Usage guide; introduction to package and usage
+          examples. It's hard to interpret API docs without this!
+        - Standardised coding style (good for contributions)
+        - CLI scripts provide an interface for non-developers and
+          useful examples for would-be API users.
+    - "Code" (large program)
+      - e.g. /VASP/
+      - Multi-functional package for some general problem type
+      - Not expected to be self-explanatory as a small program
+      - Contains many components which are re-used for different
+        problems
+      - Usage is primarily through a CLI or GUI
+      - Requires
+        - API for efficiently adding/extending features
+        - API documentation for developers
+        - User interface (CLI and/or GUI)
+        - CLI documentation for general users
+          - Should include a tutorial element or there's no real way
+            to get started
+        - "Regression tests" can spot breakage in
+          seemingly-unrelated features when changes are made
+          - should be a mixture of unit tests and integration tests
+
+      - Nice-to-have
+        - Sample data
+
+    - In practice, my workflow is usually
+      1. Script prototype
+      2. Convert script to a library for easier integration with other scripts
+      3. Add features and variations using the API to make new CL tools
+
+* COMMENT Details
+  - Would be nice to include that classic "pro tip" picture
+
+
+  - Lots of advice and commentaries on good/sustainable practice for
+    research software from SSI.
+
+
+  - "The FAIR guiding principles for scientific data management and stewardship"
+    - Comment piece in Scientific Data (Nature)
+    - Findable
+      - Use persistent identifier
+      - Use metadata
+    - Accessible
+      - Retrievable by an open standard protocal
+    - Interoperable
+      - Format data in a formal, accessible way
+    - Reusable
+      - "richly described" and using community standards
+      - Usage license and detailed provenance   
+
+  - Many FAIR principles map to Software pretty well
+    - Use a public source code repository following community
+      standards
+      - "Available by request" doesn't count
+      - Also use a persistent archive such as Zotero or institutional
+        repository
+    - Prefer standard data file formats (txt, csv, xml, hdf5) to
+      custom binary formats
+    - Use a standard license and provide some documentation
+
+  - Software has some other concerns which are not directly addressed
+    by FAIR
+
+    - Installation can be complex
+    - Hardware requirements/compatibility issues
+    - Managing versions
+
+
+  - Why share research software?
+    - Reproducibility of the research analysis. Make it easier to
+      a) try the same analysis on different data sets
+      b) try slightly different analysis on same data set
+
+      - In the medium term we can expect to see increasing pressure
+        from research councils to meaningfully share data and
+        facilitate reproducibility
+
+      - In the long term this is important for maintaining public
+        trust in scienceg
+
+    - Get external input.
+      - External users will find bugs in your code
+        - Sometimes they will fix them for you!
+
+    - Gain influence
+      - Adding your preferred methods to a package used by other
+        people is one way of encouraging the community to use that
+        method.
+
+      - Adding a big warning sign to a method is one way of sharing
+        your reservations about a technique...
+
+        - Vasp does this really badly, frequently flashing "VERY BAD
+          NEWS" warnings for stuff that is absolutely fine.
+
+    - Make it portable
+      - Avoids arguments about who owns the code when you change
+        institution!
+
+
+* COMMENT Outline
+
+** Intro
+   - "Pro tips"
+   - Who am I
+   - SSI
+
+** Sustainable Research Software
+
+*** What makes research software (un)sustainable?
+**** FAIR principles
+
+**** Application to software
+
+*** Why bother?
+
+*** Key points
+    - PROTIP: To make software available, put it somewhere people can get it
+    - PROTIP: To make software interoperable, make it work like other software
+    - PROTIP: To make software reusable, allow people to reuse it
+
+
+** Types of research software
+   - Different interfaces, docs, testing
+
+** Documentation
+   - Defer to the Django talk, but give overview
+
+** Packaging
+   - README, CITATION.cff, LICENSE, installation procedure (INSTALL file?)
+
+** The actual programming
+   - A lot of this is just practice
+   - As with an instrument, practice only helps if it's /good/
+     practice
+   - Programming is better with friends! It can be easier to spot an
+     elegant way of doing something in someone else's code
+     - e.g. Class variable for vasp syntax suggested on my pull request
+   - Watch the issue tracker of a project you care about (e.g. ASE);
+     this is a great way to learn from other people and get your feet
+     wet with small contributions.
+   - Always code with the expectation that someone else will see and
+     tinker with your code. This "someone else" is probably you in a
+     year's time.
+   - Use a style guide e.g. PEP8
+   - Introduce tests as soon as a package becomes non-trivial
+   - Premature optimisation is evil
+   - Slow code is also evil
+
+
+* Introduction
+
+** "PRO TIPS"
+
+   cyberdemon.jpg
+
+   - Sometimes it's ok to state the obvious
+   - Sometimes "advanced" problems have simple solutions
+
+** About me
+   - Undergrad chemical engineering at University of Bath (2006-2011)
+   - Aron's second student at Bath! (MRes project, 2011)
+     - PhD "Thermodynamics for practical kesterite photovoltaics" (2012-2016)
+     - Lattice dynamics
+     - Mini-post-doc in WMD group (incl. coding!)
+   - Post-doc in UCL Chemistry (Scanlon Materials Theory Group)
+     - Working on novel transparent conductors
+     - (Defects, so much hybrid DFT 😰)
+
+** About my programming
+   - Briefly exposed to BASIC at school
+   - Crash-course in Fortran in 2006
+   - Used some Matlab in undergrad
+   - Self-taught Python since around 2011
+   - Tinkered with some other stuff (C, Lisp, Julia, ...)
+
+** About my programming
+   - Never had a structured course beyond language basics
+   - Never been mentored by an experienced programmer
+
+** Projects
+   - It's an interesting time to be using Github
+   - [[https://github.com/ajjackson]]
+
+   - https://gitlab.com/ase/ase
+
+* Sustainable Research Software
+
+** Software sustainability
+   - SSI badge
+   - SSI mission statement
+
+** What makes research software (un)sustainable?
+*** FAIR principles
+    Developed for "data science": CITE
+
+    - Findable
+    - Available
+    - Interoperable
+    - Re-usable
+    
+*** Application to software
+
+** Why bother?
+
+** Key points
+   - PROTIP: To make software available, put it somewhere people can get it
+   - PROTIP: To make software interoperable, make it work like other software
+   - PROTIP: To make software reusable, allow people to reuse it
+
+
+* Software projects
+
+* Documentation
+
+* Packaging
+
+* The actual coding bit
+
+* Summary
