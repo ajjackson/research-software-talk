@@ -369,6 +369,9 @@
    #+ATTR_HTML: :width 40%
    [[./images/protip-reusable.png]]
 
+   - If your code has no license, I can't redistribute it
+   - If I make changes to it, nobody can redistribute it
+   - This isn't going to work for open science, is it?
 
 * Software projects
 
@@ -575,19 +578,29 @@
      wet with small contributions.
 
 ** PROTIP: Write good code
-   - Always code with the expectation that someone else will see and
-     tinker with your code. This "someone else" is probably you in a
-     year's time.
-   - Use a style guide e.g. PEP8
+   - Use a style guide e.g. PEP8 for Python
+     - =pip install pep8= for a nifty program that checks your style
+   - Assume that someone else will see and tinker with your code. This
+     "someone else" is probably you in a year's time.
+
 
 ** PROTIP: Write good code
-   - Plan out your overall structure and think about data types
-   - Introduce tests as soon as a package becomes non-trivial
+   - If developing a library or a code
+     - Plan out your overall structure and think carefully about the
+       flow of data
+     - Introduce tests as soon as a package becomes non-trivial
+
+** PROTIP: Write good code
+   #+ATTR_REVEAL: :frag (appear)
    - Premature optimisation is evil
+     - (Don't speed up things that are "fast enough")
    - Slow code is also evil
+     - (Try to keep a short loop of changing and testing)
 
 ** PROTIP: Write good code
+   #+ATTR_REVEAL: :frag (appear)
    - Don't let perfect get in the way of good
+   - Someone else can help you get from good to perfect
 
 * Summary
 
@@ -595,6 +608,6 @@
    - Good science is open about its methods
      - They probably involve software
    - You're going to have to show people your software
-   - Good code doesn't make good software; good practice makes good software
+   - Good software is approachable and maintainable
    - There is an overwhelming number of tools and options
-   - but also many good projects you can imitate
+     - but you can start by imitating projects you like
