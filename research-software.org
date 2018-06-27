@@ -369,9 +369,181 @@
 
 * Software projects
 
+  Let's look at some different kinds of projects and consider their needs
+
+** Small program
+   - e.g. [[https://github.com/ajjackson/mctools/blob/master/mctools/get_primitive.py][get-primitive]]
+   - Often called a "script" but doesn't have to be a scripting language
+   - Does one job well
+   - May even be a "single-shot" analysis with no options       
+   - Requires
+     - Comments to aid understanding and reproducibility
+     - Help command and/or README
+   - Nice-to-have
+     - Installer
+     - Testing with sample data
+** Library
+     - e.g. [[https://github.com/wmd-group/smact][SMACT]]
+     - To be re-used and called from other programs via _API_
+     - Maintained and developed to support other projects
+     - Requires
+       - [[http://smact.readthedocs.io/en/latest/smact.lattice.html][API documentation]]. (In Python, use Sphinx and docstrings.)
+       - Installation notes
+       - Test suite. Library gets called with different kinds
+         of data and from different states; lots more scope for
+         "surprises".
+     - Nice-to-have
+       - Usage guide; introduction to package and usage
+         examples.
+       - Standardised coding style (good for contributions)
+       - Scripts act as an interface for non-developers and
+         useful examples for API users.
+** "Code" (large program)
+     - e.g. /VASP/
+     - Multi-functional package for some general problem type
+         - Used primarily through a CLI or GUI
+     - Not expected to be self-explanatory as a small program
+     - Contains many components which are re-used for different
+       problems
+     - Requires
+       - API for efficiently adding/extending features
+       - Documentation for developers (API)
+       - User interface (CLI and/or GUI)
+       - Documentation for general users (CLI/GUI)
+       - Tests
+     - Nice-to-have
+       - Sample data
+
+** Workflow
+    In practice, my workflow is usually
+
+    1. Script or notebook prototype
+    2. Convert script to a library for easier re-use
+    3. Add features and variations using the API to make new CL tools
+
 * Documentation
 
+  You should watch Daniele Procida's amazing talk about documentation
+  - Pycon video: https://www.youtube.com/watch?v=azf6yzuJt54
+  - Blog version https://www.divio.com/en/blog/documentation/
+
+  The following ideas are directly taken from it
+
+** Four types of documentation
+
+   - Tutorials
+   - How-to guides
+   - Explanation
+   - Reference
+
+** Four types of documentation
+   Daniele uses a wonderful cooking analogy for these:
+   - *Tutorials* "Teaching a small child to cook"
+   - *How-to guides* "A recipe in a book"
+   - *Explanation* "An article on culinary social history"
+   - *Reference* "A reference encyclopedia article"
+
+** Four types of documentation
+   - These do not need to be located in four different places
+   - They should all /exist/ and be findable at the right time
+
+** Four types of documentation
+   Applying them to scientific software:
+*** Tutorials
+    - Usually in a README on online manual.
+    - Lead a beginner, showing input steps and expected output.
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+      #+ATTR_HTML: :width 60%
+      [[./images/macrodensity-tutorial.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+      #+ATTR_HTML: :width 70%
+      [[./images/galore-tut.png]]
+#+REVEAL_HTML: </div>
+
+
+    - Producing the right plot is a big confidence booster!
+*** How-to guides
+    - A concise summary of how to do useful things.
+      - Questaal docs show how this can be [[https://www.questaal.org/tutorial/lmf/bandplotting/][combined with a tutorial]]
+      - Visual galleries are nice: see [[http://sumo.readthedocs.io/en/latest/gallery.html][sumo]] or matplotlib
+*** Explanation
+    - Background theory, important assumptions.
+      - Could be a chapter in manual
+      - Could be a "real" paper!
+
+    #+ATTR_HTML: :width 60%
+    [[./images/phonopy-paper.png]]
+
+*** Reference
+    - API documentation
+    - Detailed command line reference
+
+      #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+            #+ATTR_HTML: :width 60%
+            [[./images/vasp-guide.png]]
+      #+REVEAL_HTML: </div>
+
+      #+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+            #+ATTR_HTML: :width 70%
+            [[./images/man-page.png]]
+      #+REVEAL_HTML: </div>
+
 * Packaging
+
+** Stuff to include
+   - README
+   - LICENSE
+   - CONTRIBUTING
+   - INSTALL
+   - CITATION
+   - tests
+
+** README
+   - This document is usually your "homepage"
+   - Introduce the project
+   - Point to other resources
+
+** LICENSE
+#+ATTR_REVEAL: :frag appear
+   - Licensing is complicated
+   - Don't make it more complicated by inventing your own
+   - Use of standard licenses makes it quicker and easier for users
+   - https://choosealicense.com/
+
+** CONTRIBUTING
+   - Are external contributions welcome?
+   - How should people interact with the project?
+
+** INSTALL
+   - Try to make installation easy...
+   #+ATTR_REVEAL: :frag t
+   - ... but don't be /weird/ about it!
+   #+ATTR_REVEAL: :frag t
+   - Don't expect people to use =sudo= (they'll feel safer for it!)
+   - For Python projects, use setuptools
+   - For compiled languages, use a simple makefile or autoconf
+
+** CITATION
+   - This is cutting edge!
+   - There still isn't really a standard way to cite code...
+   #+ATTR_REVEAL: :frag t
+   - ... but there should be!
+   - [[https://citation-file-format.github.io/][Citation file format]] has been proposed. 
+     - Based on YAML: readability balanced for humans and machines
+     - Can include papers
+   - [[https://software.ac.uk/index.php/which-journals-should-i-publish-my-software][New journals are emerging]]
+
+** tests
+   - Don't re-invent the wheel, use an existing framework for
+     non-trivial testing
+   - "Continuous Integration" e.g. Travis CI automatically runs
+   - Coverage testing is depressing but helpful
+
+     #+ATTR_HTML: :width 60%
+     [[./images/badges.png]]
 
 * The actual coding bit
 
